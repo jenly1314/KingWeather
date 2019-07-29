@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#144089</color>
+    <color name="colorPrimaryDark">#154077</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="refresh_color">#144089</color>
+
+    <color name="text_white">#FFFFFF</color>
+
+    <color name="item_color">#2FFFFFFF</color>
+
+    <color name="list_divider">#7faaaaaa</color>
+
+    <color name="drawer_color">#7F144089</color>
+</resources>

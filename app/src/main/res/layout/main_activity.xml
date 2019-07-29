@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="com.king.weather.app.main.MainViewModel"/>
+        <variable name="live" type="com.amap.api.services.weather.LocalWeatherLive"/>
+        <variable name="forecast" type="com.amap.api.services.weather.LocalWeatherForecast"/>
+    </data>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/weather_bg">
+            <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_16">
+                        <TextView
+                                android:id="@+id/tvCity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:textSize="@dimen/city_text_size"
+                                android:textColor="@color/text_white"
+                                android:text="@{live.city}"
+                                tools:text="深圳"
+                                android:singleLine="true"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"/>
+                        <TextView
+                                android:id="@+id/tvReportTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:textColor="@color/text_white"
+                                bind:date="@{live.reportTime}"
+                                tools:text="2019-7-25 10:00 发布"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"/>
+                        <View android:layout_width="0dp"
+                              android:layout_height="0dp"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintTop_toTopOf="@+id/tvTemperature"
+                              app:layout_constraintBottom_toBottomOf="@+id/tvHumidity"
+                              android:background="@drawable/shape_bg"/>
+                        <TextView
+                                android:id="@+id/tvTemperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:textSize="@dimen/temperature_text_size"
+                                android:textColor="@color/text_white"
+                                bind:temperature="@{live.temperature}"
+                                tools:text="26℃"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvCity"/>
+                        <TextView
+                                android:id="@+id/tvWeather"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_30"
+                                android:textSize="@dimen/weather_text_size"
+                                android:textColor="@color/text_white"
+                                android:text="@{live.weather}"
+                                tools:text="晴"
+                                app:layout_constraintLeft_toRightOf="@+id/tvTemperature"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvTemperature"/>
+
+                        <TextView
+                                android:id="@+id/tvWind"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:textColor="@color/text_white"
+                                bind:windDirection="@{live.windDirection}"
+                                bind:windPower="@{live.windPower}"
+                                tools:text="西北风     3级"
+                                app:layout_constraintLeft_toLeftOf="@+id/tvWeather"
+                                app:layout_constraintTop_toBottomOf="@+id/tvWeather"/>
+                        <TextView
+                                android:id="@+id/tvHumidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_white"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                bind:humidity="@{live.humidity}"
+                                tools:text="湿度      52%"
+                                app:layout_constraintLeft_toLeftOf="@+id/tvWeather"
+                                app:layout_constraintTop_toBottomOf="@+id/tvWind"/>
+                        <View android:layout_width="0dp"
+                              android:layout_height="0dp"
+                              android:layout_marginTop="@dimen/dp_10"
+                              app:layout_constraintLeft_toLeftOf="parent"
+                              app:layout_constraintRight_toRightOf="parent"
+                              app:layout_constraintTop_toBottomOf="@+id/tvHumidity"
+                              app:layout_constraintBottom_toBottomOf="@+id/rv"
+                              android:background="@drawable/shape_bg"/>
+                        <TextView
+                                android:id="@+id/tvLabelForecast"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_white"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_20"
+                                android:textSize="@dimen/sp_20"
+                                android:text="@string/label_forecast"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvHumidity"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/dp_6"
+                                android:paddingBottom="@dimen/dp_6"
+                                tools:listitem="@layout/rv_forecast_item"
+                                app:layout_constraintTop_toBottomOf="@+id/tvLabelForecast"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srlCity"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/drawer_color"
+                bind:onRefreshListener="@{() -> viewModel.onRefresh()}">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</layout>
